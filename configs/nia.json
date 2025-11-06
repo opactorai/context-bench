@@ -1,0 +1,15 @@
+{
+  "config_name": "nia",
+  "description": "Claude Code + NIA MCP (stdio)",
+  "mcp_servers": {
+    "nia": {
+      "type": "stdio",
+      "command": "pipx",
+      "args": ["run", "--no-cache", "nia-mcp-server"],
+      "env": {
+        "NIA_API_KEY": "${NIA_API_KEY}",
+        "NIA_API_URL": "https://apigcp.trynia.ai/"
+      }
+    }
+  }
+}

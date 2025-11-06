@@ -1,0 +1,43 @@
+package-id: openai-agents
+language: python
+registry: py_pi
+context7-id: openai/openai-agents-python
+deepcon-id: agents-sdk
+scenarios:
+  - id: streaming-tools
+    query: "Using the OpenAI Agents Python SDK with streaming and tool calling, build an agent that plans the next hour. First, tell me the current time in America/Los_Angeles and then compute 137 * 42. Stream partial text and show when tools are called so I can display progress to the user."
+    oracle: scenarios/openai-agents/streaming_tools.py
+    sources:
+      - https://openai.github.io/openai-agents-python/tools/
+      - https://openai.github.io/openai-agents-python/streaming/
+      - https://openai.github.io/openai-agents-python/agents/
+
+  - id: handoffs-guardrails
+    query: "Using the OpenAI Agents Python SDK with handoffs and guardrails, create a routing agent. Route my request to the best specialist. If it's a math calculation, hand off to the Calculator; if it's prose, hand off to the Writer. Refuse if the user tries to share a credit card number. Return a short final answer. Test with: 'write a 1-sentence pep talk'"
+    oracle: scenarios/openai-agents/handoffs_guardrails.py
+    sources:
+      - https://openai.github.io/openai-agents-python/handoffs/
+      - https://openai.github.io/openai-agents-python/multi_agent/
+      - https://openai.github.io/openai-agents-python/guardrails/
+
+  - id: sessions-context
+    query: "Using the OpenAI Agents Python SDK with sessions and persistent context, build a memory-enabled agent. Remember my name and city for this conversation. When I ask 'what's my city', retrieve it via a tool. Keep the memory across multiple runs in a local SQLite file and show me what was added to the history. Test with: 'What's my city?'"
+    oracle: scenarios/openai-agents/sessions_context.py
+    sources:
+      - https://openai.github.io/openai-agents-python/sessions/
+      - https://openai.github.io/openai-agents-python/context/
+      - https://openai.github.io/openai-agents-python/results/
+
+  - id: realtime-agent
+    query: "Using the OpenAI Agents Python SDK with Realtime API support, start a voice concierge that listens and replies in real time. Use the Realtime model with server-side VAD; just log audio events to stdout (no audio device needed)."
+    oracle: scenarios/openai-agents/realtime_agent.py
+    sources:
+      - https://openai.github.io/openai-agents-python/realtime/quickstart/
+      - https://openai.github.io/openai-agents-python/realtime/guide/
+      - https://platform.openai.com/docs/guides/realtime
+
+runtime:
+  version: "python3.11"
+
+env_vars:
+  OPENAI_API_KEY: "${OPENAI_API_KEY}"

@@ -1,0 +1,13 @@
+{
+  "config_name": "context7",
+  "description": "Claude Code + Context7 MCP (stdio)",
+  "mcp_servers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "env": {
+        "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
+      }
+    }
+  }
+}

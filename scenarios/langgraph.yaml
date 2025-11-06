@@ -1,0 +1,41 @@
+package-id: langgraph
+language: python
+registry: py_pi
+context7-id: /websites/langchain-ai_github_io_langgraph
+scenarios:
+  - id: hil-writer
+    query: "Using the LangGraph Python library with interrupts and persistence, build a human-in-the-loop writer. Draft a concise README in Markdown about 'LangGraph-powered agents'. Wait for me to approve or send change requests before saving. If I request changes, revise and ask again; I may also rewind to a previous checkpoint."
+    oracle: scenarios/langgraph/hil_writer.py
+    sources:
+      - https://docs.langchain.com/oss/python/langgraph/interrupts
+      - https://docs.langchain.com/oss/python/langgraph/persistence
+      - https://docs.langchain.com/oss/python/langgraph/use-time-travel
+
+  - id: parallel-brief
+    query: "Using the LangGraph Python library with parallel graph execution and streaming, create a parallel research brief generator. Create a one-page research brief on 'small modular reactors'. Plan 3-5 sections, draft them in parallel, stream progress as each section completes, then merge into a single report."
+    oracle: scenarios/langgraph/parallel_brief.py
+    sources:
+      - https://docs.langchain.com/oss/python/langgraph/use-graph-api
+      - https://docs.langchain.com/oss/python/langgraph/streaming
+
+  - id: two-agent-subgraphs
+    query: "Using the LangGraph Python library with subgraphs and multi-agent orchestration, build a two-agent blog writing system. Draft a 400-word blog post about 'edge AI on factories'. First a writer plans and drafts; then an editor polishes tone and clarity. Orchestrate the two agents as reusable subgraphs."
+    oracle: scenarios/langgraph/two_agent_subgraphs.py
+    sources:
+      - https://docs.langchain.com/oss/python/langgraph/use-subgraphs
+      - https://langchain-ai.github.io/langgraph/tutorials/multi_agent/multi-agent-collaboration/
+      - https://docs.langchain.com/oss/python/langgraph/workflows-agents
+
+  - id: functional-review
+    query: "Using the LangGraph Python library with functional API and memory management, create a review workflow with memory. Compose a 200-word project summary from my bullet points. Pause for my approval; if I reject, I'll provide edits and you'll finalize. Keep short-term memory across invocations within the same thread."
+    oracle: scenarios/langgraph/functional_review.py
+    sources:
+      - https://docs.langchain.com/oss/python/langgraph/functional-api
+      - https://docs.langchain.com/oss/python/langgraph/add-memory
+      - https://langchain-ai.github.io/langgraph/concepts/human_in_the_loop
+
+runtime:
+  version: "python3.11"
+
+env_vars:
+  OPENAI_API_KEY: "${OPENAI_API_KEY}"

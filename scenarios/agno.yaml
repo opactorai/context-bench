@@ -1,0 +1,38 @@
+package-id: agno
+language: python
+registry: py_pi
+context7-id: /websites/agno
+scenarios:
+  - id: trend-scout
+    query: "Using the Agno Python framework, build a trend scout agent. Find the top 3 emerging AI tools from Hacker News right now and cross-check them with the latest web coverage. Give me a tight brief with 3 bullet takeaways, links (HN + news), and a 1-sentence risk note per tool."
+    oracle: scenarios/agno/trend_scout.py
+    sources:
+      - https://docs.agno.dev/quickstart
+      - https://docs.agno.dev/tools/duckduckgo
+
+  - id: content-team
+    query: "Using the Agno Python framework with multi-agent teams, create a content generation system for launching a stainless, eco-friendly water bottle. Build a team that produces a 1-page blog post: (a) outline, (b) 3-5 credible source links, (c) final copy in markdown. The writer must cite the researcher's sources, and the planner should ensure a clear buyer persona."
+    oracle: scenarios/agno/content_team.py
+    sources:
+      - https://docs.agno.dev/agents/building-teams
+      - https://docs.agno.dev/agents/running-teams
+
+  - id: visual-explainer
+    query: "Using the Agno Python framework with image input capabilities, build a visual explainer agent. When I send an image, identify the landmark, explain its significance, then pull the two latest news items related to it. End with a 3-point TL;DR and links."
+    oracle: scenarios/agno/visual_explainer.py
+    sources:
+      - https://docs.agno.dev/agents/image-as-input
+      - https://docs.agno.dev/models/openai
+
+  - id: copy-workflow
+    query: "Using the Agno Python framework's workflow system, build a deterministic copy generation workflow. From a spec, produce a short landing page (headline, 3 benefits, CTA) and then a Spanish translation. Keep style crisp and product-led. Make the process deterministic and show step outputs."
+    oracle: scenarios/agno/copy_workflow.py
+    sources:
+      - https://docs.agno.dev/workflows/building-workflows
+      - https://docs.agno.dev/workflows/workflow-reference
+
+runtime:
+  version: "python3.11"
+
+env_vars:
+  OPENAI_API_KEY: "${OPENAI_API_KEY}"

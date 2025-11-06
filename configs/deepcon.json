@@ -1,0 +1,14 @@
+{
+  "config_name": "deepcon",
+  "description": "Claude Code + DeepCon MCP (stdio)",
+  "mcp_servers": {
+    "deepcon": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "deepcon-mcp"],
+      "env": {
+        "DEEPCON_API_KEY": "${DEEPCON_API_KEY}"
+      }
+    }
+  }
+}

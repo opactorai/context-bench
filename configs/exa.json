@@ -1,0 +1,14 @@
+{
+  "config_name": "exa",
+  "description": "Claude Code + Exa MCP (stdio)",
+  "mcp_servers": {
+    "exa": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "exa-mcp-server"],
+      "env": {
+        "EXA_API_KEY": "${EXA_API_KEY}"
+      }
+    }
+  }
+}

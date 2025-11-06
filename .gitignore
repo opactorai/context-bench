@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+logs/
+reports/
+workspace/
+*.log
+.DS_Store
+*.swp
+*.swo
+.vscode/
+.idea/

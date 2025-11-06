@@ -1,0 +1,41 @@
+{
+  "scenario": "openrouter-sdk:auto-router-stream",
+  "mode": "oneshot",
+  "timestamp": "2025-11-06T16:36:39.719Z",
+  "models": [
+    {
+      "model": "openai/gpt-5",
+      "completeness": true,
+      "relevance": true,
+      "overall_score": 5,
+      "confidence": "high",
+      "reasoning": "Step 1 – User requirements\n- Use the OpenRouter TypeScript SDK\n- Build a real-time chat endpoint that streams tokens\n- Auto-select the best model per prompt (model routing)\n- Include app attribution headers (HTTP-Referer and X-Title) so the app appears on OpenRouter rankings\n\nStep 2 – Oracle implementation details (as implied by the scenario)\n- SDK import/instantiation: import { OpenRouter } from '@openrouter/sdk'; new OpenRouter({ apiKey, defaultHeaders })\n- App attribution: defaultHeaders: { 'HTTP-Referer': '...', 'X-Title': '...' }\n- Streaming + auto-router call: openRouter.chat.send({ model: 'openrouter/auto', messages: [...], stream: true, streamOptions: { includeUsage: true } })\n- Streaming consumption: for await (const chunk of stream) { const token = chunk.choices?.[0]?.delta?.content; if (chunk.usage) ... }\n- HTTP endpoint using SSE: Express handler sets SSE headers, writes tokens per chunk, handles errors, ends stream\n\nStep 3 – MCP context coverage against checklist\n1) API/function names: Clearly provided\n- “import { OpenRouter } from '@openrouter/sdk';”\n- “const stream = await openRouter.chat.send({...});”\n2) Parameter types and purposes: Inferable from code and comments\n- model: string (e.g., 'openrouter/auto')\n- messages: array of { role: 'user' | 'system' | 'assistant', content: string }\n- stream: boolean\n- streamOptions: { includeUsage: boolean }\n- defaultHeaders: Record<string, string> for attribution\n3) Return value structure: Demonstrated\n- Async iterator of chunks; access “chunk.choices?.[0]?.delta?.content” and “chunk.usage”\n- Troubleshooting notes mention “chunk.error.message”\n4) Usage patterns: Fully shown\n- Auto Router usage: “model: 'openrouter/auto'”\n- Streaming pattern: “for await (const chunk of stream)”\n- SSE endpoint with Express: sets headers, res.write per token, res.end\n5) Error handling: Demonstrated\n- try/catch around streaming; SSE error event\n- Troubleshooting: “Chunk contains `error` field ... Inspect `chunk.error.message`”\n6) Explicit constraints met\n- Streaming enabled via “stream: true”\n- Auto-routing via “model: 'openrouter/auto'”\n- Attribution headers via defaultHeaders: { 'HTTP-Referer': 'https://my-awesome-app.com', 'X-Title': 'My Awesome Chat App' }\n\nEvidence quotes from context\n- “model: 'openrouter/auto', messages: [{ role: 'user', content: userPrompt }], stream: true, streamOptions: { includeUsage: true }”\n- “for await (const chunk of stream) { const content = chunk.choices?.[0]?.delta?.content; if (chunk.usage) { ... } }”\n- “defaultHeaders: { 'HTTP-Referer': 'https://my‑awesome‑app.com', 'X-Title': 'My Awesome Chat App' }”\n- SSE pattern: “res.setHeader('Content-Type', 'text/event-stream'); ... res.write(`data: ${JSON.stringify({ token })}\\n\\n`); ... res.end();”\n\nDecision\n- Complete: The MCP context provides clear, concrete examples and parameters to implement the oracle functionality end-to-end (SDK init, attribution headers, auto router model selection, streaming call, async iteration over chunks, SSE endpoint, and error handling). No guessing is required.\n\nReference link\n- Full context: https://deepcon.ai/context/cmhnnew7r000tjr04b1qy95vw"
+    },
+    {
+      "model": "deepseek/deepseek-v3.2-exp",
+      "completeness": true,
+      "relevance": true,
+      "overall_score": 5,
+      "confidence": "high",
+      "reasoning": "The MCP context provides comprehensive information that directly addresses all user requirements:\n\n1. **Streaming with Auto Router**: Context shows `model: 'openrouter/auto'` for auto-routing and `stream: true` for token-wise streaming\n2. **App Attribution**: Clear examples of `defaultHeaders` with `HTTP-Referer` and `X-Title` for rankings\n3. **API Usage**: Complete TypeScript examples showing `openRouter.chat.send()` with all parameters, return types, and async iterator patterns\n4. **Error Handling**: Includes try-catch blocks and error propagation examples\n5. **Full Implementation**: Express endpoint example provides complete real-time chat implementation\n\nAll required information is explicitly documented with verbatim code from official SDK documentation, making implementation straightforward without guessing."
+    },
+    {
+      "model": "x-ai/grok-4",
+      "completeness": true,
+      "relevance": true,
+      "overall_score": 5,
+      "confidence": "high",
+      "reasoning": "Step 1: User Requirements - Functionality: Build a real-time chat endpoint using OpenRouter TypeScript SDK that streams tokens, uses model routing to auto-select the best model per prompt (via 'openrouter/auto'), and includes app attribution via HTTP-Referer and X-Title headers for OpenRouter rankings. Explicit constraints: Use OpenRouter TypeScript SDK, enable streaming, use model routing with auto-selection, attribute app with specific headers. Technical specs: TypeScript, streaming tokens in real-time, auto model selection.\n\nStep 2: Oracle Implementation Details - Assuming the oracle is a correct implementation of the query, it would use the @openrouter/sdk package, initialize OpenRouter with apiKey and defaultHeaders for attribution, call openRouter.chat.send with parameters like model: 'openrouter/auto', messages array, stream: true, streamOptions: {includeUsage: true}. It would process the async stream iterator to handle chunks (extracting content from choices[0].delta.content and usage), and set up a server endpoint (e.g., Express) to stream responses via SSE or similar. Parameter types: model (string), messages (array of objects with role and content), stream (boolean), streamOptions (object). Return type: async iterable of chunks with choices, delta, content, and usage. Error handling: Try-catch around the stream, sending error events.\n\nStep 3: MCP Context Coverage - For building the endpoint with SDK: Context provides full code examples including installation ('npm install @openrouter/sdk'), initialization ('new OpenRouter({apiKey, defaultHeaders})' with HTTP-Referer and X-Title), sending request ('openRouter.chat.send({model: 'openrouter/auto', messages: [...], stream: true, streamOptions: {includeUsage: true}})'), processing stream ('for await (const chunk of stream) { ... }' handling content and usage). Full Express endpoint example streams via SSE, including error handling ('try { ... } catch (err) { res.write(error event) } finally { res.end() }'). Key parameters table lists model, messages, stream, streamOptions. Usage patterns: Verbatim code snippets show exact calls. Error handling: Example includes console.error and sending error events. For streaming and model routing: Explicitly covered with 'stream: true' and 'model: 'openrouter/auto''. For attribution: 'defaultHeaders' in init. All 6 checklist items inferable: API names (OpenRouter, chat.send), parameter types (e.g., string for model, array for messages from examples), names/purposes (from table and code), return structure (chunks with choices[0].delta.content, usage from code), usage patterns (full examples), error handling (in endpoint code). No guessing required; all explicit.\n\nStep 4: Decision - Completeness: true, because ALL requirements are addressable with sufficient info to infer APIs, params (e.g., 'model: 'openrouter/auto''), returns (chunk structure), usage (full endpoint code), and errors. Explicit constraints met (SDK, streaming, auto model, headers). Relevance: true, context directly implements the query's functionality. Overall: 5 (excellent, all info clearly inferable). Confidence: high, based on verbatim code evidence."
+    }
+  ],
+  "aggregated": {
+    "completeness_rate": 1,
+    "relevance_rate": 1,
+    "average_score": 5,
+    "final_score": 5,
+    "completeness_majority": true,
+    "relevance_majority": true,
+    "pass": true
+  },
+  "consensus": true
+}

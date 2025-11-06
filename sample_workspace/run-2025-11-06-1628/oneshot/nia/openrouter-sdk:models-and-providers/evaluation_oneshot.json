@@ -1,0 +1,41 @@
+{
+  "scenario": "openrouter-sdk:models-and-providers",
+  "mode": "oneshot",
+  "timestamp": "2025-11-06T16:32:23.115Z",
+  "models": [
+    {
+      "model": "openai/gpt-5",
+      "completeness": true,
+      "relevance": true,
+      "overall_score": 5,
+      "confidence": "high",
+      "reasoning": "Step 1: User requirements\n- Use the OpenRouter TypeScript SDK.\n- Count available models.\n- List providers.\n- Send a chat using a safe default model.\n- One-shot script; no extra constraints specified.\n\nStep 2: Oracle implementation details (from MCP context/tool result)\n- Initialization: \"import { OpenRouter } from '@openrouter/sdk';\" and \"const openRouter = new OpenRouter({ apiKey: '<OPENROUTER_API_KEY>' });\"\n- Models API: \"const models = await openRouter.models.list();\" then \"models.length\" and iterating \"models.forEach(model => { const provider = model.id.split('/')[0]; ... })\"\n- Chat API: \"const completion = await openRouter.chat.send({ model: 'meta-llama/llama-3.1-70b-instruct:floor', messages: [{ role: 'user', content: 'Hello! Can you briefly explain what OpenRouter is?' }], stream: false });\"\n- Return handling: \"completion.choices[0].message.content\"\n- Error handling: try/catch around the async operations.\n- Safe default model: \"meta-llama/llama-3.1-70b-instruct:floor\" called out as \"Safe default model\" in comments.\n\nStep 3: MCP context coverage vs. requirements\n1) API/function names\n- Clearly shown: \"OpenRouter\" constructor, \"openRouter.models.list()\", \"openRouter.chat.send(...)\".\n- Evidence: The snippet explicitly uses these methods.\n\n2) Parameter types/names and purposes\n- Initialization expects an object with \"apiKey\" string.\n- models.list has no params in usage, implying list() returns all models.\n- chat.send params object includes: \"model\" (string), \"messages\" (array of { role: string; content: string }), \"stream\" (boolean).\n- Evidence: \"new OpenRouter({ apiKey: '<OPENROUTER_API_KEY>' })\" and \"openRouter.chat.send({ model: 'meta-llama/...:floor', messages: [{ role: 'user', content: '...' }], stream: false })\".\n\n3) Return value structures\n- models.list returns an array (\"models.length\") of objects with at least an \"id\" field (\"model.id\").\n- chat.send returns an object with a \"choices\" array containing items with a \"message\" having \"content\" (\"completion.choices[0].message.content\").\n- Evidence as above.\n\n4) Usage patterns\n- Authentication setup, async/await usage, iteration over models, extracting providers via id split.\n- Evidence: \"const providers = new Set<string>(); ... model.id.split('/')\" and try/catch.\n\n5) Error handling\n- Generic try/catch is demonstrated: \"try { ... } catch (error) { console.error('Error:', error); }\" This suffices for handling promise rejections for these calls.\n\n6) Meeting explicit constraints\n- Uses OpenRouter TypeScript SDK (\"@openrouter/sdk\"), counts models, lists providers, and sends a chat using a chosen safe default model string.\n- The snippet even provides install/run instructions (\"npm install @openrouter/sdk\", \"npx tsx script.ts\").\n\nAdditional evidence/notes\n- The context includes explanatory comments like \"Model IDs are typically in format 'provider/model-name'\", which justifies extracting providers from the id prefix.\n- Source links are provided (e.g., \"https://openrouter.ai/docs/sdks/typescript/models.mdx\"), but even without fetching them, the snippet itself fully demonstrates the required APIs and shapes.\n\nDecision\n- Completeness: TRUE. All required APIs, parameters, returns, and usage patterns (including error handling) are clearly inferable from the provided MCP context.\n- Relevance: TRUE. The context directly implements the requested functionality.\n- Overall score: 5 (Excellent) because a developer could implement the oracle code as-is from the provided snippet without guessing."
+    },
+    {
+      "model": "deepseek/deepseek-v3.2-exp",
+      "completeness": true,
+      "relevance": true,
+      "overall_score": 5,
+      "confidence": "high",
+      "reasoning": "Step 1: User Requirements Analysis - The user requests a script that: (1) counts available models, (2) lists providers, and (3) sends a chat using a safe default model. Step 2: Oracle Implementation Analysis - The oracle uses: openRouter.models.list() to get models, extracts providers from model IDs (provider/model-name format), and openRouter.chat.send() with specific parameters including model selection and messages array. Step 3: MCP Context Coverage Evaluation - The context provides complete information: (1) API functions: openRouter.models.list() and openRouter.chat.send() are clearly documented; (2) Parameter types: The chat.send() parameters include model (string), messages (array with role and content), and stream (boolean); (3) Parameter purposes: Examples show model selection, message structure, and streaming control; (4) Return values: shows models.length for counting and completion.choices[0].message.content for chat responses; (5) Usage patterns: Complete working example with initialization, error handling, and all required operations; (6) Error handling: Includes try-catch pattern. All user requirements are fully addressable with clear examples showing exactly how to implement each feature without ambiguity."
+    },
+    {
+      "model": "x-ai/grok-4",
+      "completeness": true,
+      "relevance": true,
+      "overall_score": 5,
+      "confidence": "high",
+      "reasoning": "Step 1: User Requirements - The query requests a TypeScript script using the OpenRouter SDK to: (1) count available models, (2) list providers, and (3) send a chat using a safe default model. Explicit constraints: Use OpenRouter TypeScript SDK. No specific models or versions beyond 'safe default model' are mandated.\n\nStep 2: Oracle Implementation - The oracle code imports { OpenRouter } from '@openrouter/sdk'; initializes with new OpenRouter({ apiKey: '...' }); uses openRouter.models.list() to fetch models (returns an array); extracts providers by splitting model.id (e.g., 'provider/model-name'); uses openRouter.chat.send({ model: 'meta-llama/llama-3.1-70b-instruct:floor', messages: [{ role: 'user', content: '...' }], stream: false }) which returns an object with choices[0].message.content. Includes basic error handling with try-catch.\n\nStep 3: MCP Context Coverage - The context provides a complete code example matching the oracle. For counting models: Context shows 'openRouter.models.list()' returning an array, inferable as models.length for count. Parameters: None explicit, but usage is clear. Return: Array of model objects with 'id'. For listing providers: Context infers from model.id.split('/')[0], using Set for uniques; no direct API, but pattern is shown. For sending chat: 'openRouter.chat.send()' with params like model (string), messages (array of objects with role/content), stream (boolean); return structure inferable as object with choices array containing message.content. Usage patterns: Full script example. Error handling: try-catch in example. All 6 checklist items inferable without guessing.\n\nStep 4: Decision - Completeness = true because all requirements are fully addressable with no missing info or guessing; explicit SDK constraint met. Relevance = true as context directly implements the query. Score 5: Excellent, complete example enables confident implementation. Confidence high: Direct evidence from code in context, e.g., 'const models = await openRouter.models.list();' and 'const completion = await openRouter.chat.send({...});'."
+    }
+  ],
+  "aggregated": {
+    "completeness_rate": 1,
+    "relevance_rate": 1,
+    "average_score": 5,
+    "final_score": 5,
+    "completeness_majority": true,
+    "relevance_majority": true,
+    "pass": true
+  },
+  "consensus": true
+}

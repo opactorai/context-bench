@@ -1,0 +1,5 @@
+{
+  "config_name": "baseline",
+  "description": "Claude Code only (no MCP)",
+  "mcp_servers": {}
+}

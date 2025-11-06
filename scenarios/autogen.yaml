@@ -1,0 +1,38 @@
+package-id: autogen
+language: python
+registry: py_pi
+context7-id: /microsoft/autogen
+scenarios:
+  - id: streaming-tools
+    query: "Using the Autogen Python library, build an agent with tool calling and streaming capabilities. Plan a 30-second 'market brief' for EUR→KRW travelers. Call a weather tool for Seoul and a simple FX tool for USD/KRW, then summarize key takeaways in 4 bullets. Stream your answer as you work; if the tool output is terse, reflect to make it readable."
+    oracle: scenarios/autogen/streaming_tools.py
+    sources:
+      - https://microsoft.github.io/autogen/dev/user-guide/agentchat-user-guide/quickstart.html
+      - https://microsoft.github.io/autogen/dev/user-guide/agentchat-user-guide/tutorial/agents.html
+
+  - id: team-termination
+    query: "Using the Autogen Python library with teams and termination conditions, build a multi-agent system. Draft a 6-line product tagline for a sustainable water bottle. A critic must review and APPROVE; otherwise iterate. If we exceed a small turn budget, stop automatically."
+    oracle: scenarios/autogen/team_termination.py
+    sources:
+      - https://microsoft.github.io/autogen/dev/user-guide/agentchat-user-guide/tutorial/teams.html
+      - https://microsoft.github.io/autogen/dev/user-guide/agentchat-user-guide/tutorial/termination.html
+
+  - id: hitl-persist
+    query: "Using the Autogen Python library with human-in-the-loop and state persistence, build an interactive agent system. Propose a 2-step cold-email. After your first draft, pause and wait for my feedback on the audience. When resumed, refine the email using my feedback."
+    oracle: scenarios/autogen/hitl_persist.py
+    sources:
+      - https://microsoft.github.io/autogen/dev/user-guide/agentchat-user-guide/tutorial/human-in-the-loop.html
+      - https://microsoft.github.io/autogen/dev/user-guide/agentchat-user-guide/tutorial/managing-state.html
+
+  - id: selector-groupchat
+    query: "Using the Autogen Python library with selector-based group chat, create a small research 'crew': (1) Plan subtasks; (2) run a mock web search; (3) compute a percentage change; Stop when planning is complete and say 'TERMINATE'."
+    oracle: scenarios/autogen/selector_groupchat.py
+    sources:
+      - https://microsoft.github.io/autogen/dev/user-guide/agentchat-user-guide/tutorial/selector-group-chat.html
+      - https://microsoft.github.io/autogen/dev/user-guide/agentchat-user-guide/tutorial/models.html
+
+runtime:
+  version: "python3.11"
+
+env_vars:
+  OPENAI_API_KEY: "${OPENAI_API_KEY}"

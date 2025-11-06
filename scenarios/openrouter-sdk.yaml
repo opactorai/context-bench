@@ -1,0 +1,41 @@
+package-id: openrouter-sdk
+language: typescript
+registry: npm
+context7-id: /llmstxt/openrouter_ai_llms-full_txt
+scenarios:
+  - id: auto-router-stream
+    query: "Using the OpenRouter TypeScript SDK with streaming and model routing, build a real-time chat endpoint that streams tokens and auto-selects the best model for each prompt. Please attribute my app (HTTP-Referer/X-Title headers) so it appears on OpenRouter rankings."
+    oracle: scenarios/openrouter-sdk/auto_router_stream.ts
+    sources:
+      - https://openrouter.ai/docs/streaming
+      - https://openrouter.ai/docs/model-routing
+      - https://openrouter.ai/docs/app-attribution
+
+  - id: models-and-providers
+    query: "Using the OpenRouter TypeScript SDK, write a small script that counts available models, lists providers, and then sends a chat using a safe default model."
+    oracle: scenarios/openrouter-sdk/models_and_providers.ts
+    sources:
+      - https://openrouter.ai/docs/api-reference
+      - https://github.com/OpenRouterTeam/openrouter-sdk
+
+  - id: usage-and-keys
+    query: "Using the OpenRouter TypeScript SDK with analytics and key management APIs, build a CLI for org admins. Pull the last 30 days of user activity grouped by endpoint, and list all API keys with their labels. Include a note on React Query hooks for future SSR prefetch."
+    oracle: scenarios/openrouter-sdk/usage_and_keys.ts
+    sources:
+      - https://openrouter.ai/docs/analytics
+      - https://openrouter.ai/docs/api-keys
+      - https://github.com/OpenRouterTeam/openrouter-sdk/blob/main/REACT_QUERY.md
+
+  - id: structured-tools
+    query: "Using the OpenRouter TypeScript SDK with structured outputs and tool calling, create a single function that forces strict JSON output for a small schema and supports tool calling for getCurrentWeather. If the model asks to call the tool, run a mock tool and then return the final structured answer."
+    oracle: scenarios/openrouter-sdk/structured_tools.ts
+    sources:
+      - https://openrouter.ai/docs/structured-outputs
+      - https://openrouter.ai/docs/tool-calling
+      - https://openrouter.ai/docs/message-transforms
+
+runtime:
+  version: "node18"
+
+env_vars:
+  OPENROUTER_API_KEY: "${OPENROUTER_API_KEY}"
