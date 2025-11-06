@@ -1,6 +1,6 @@
 # Context Bench
 
-![Context Bench](./assets/context-bench.png)
+![Context Bench](https://storage.googleapis.com/claudable-assets/v6830L9fN1oZTer4Nh5G9.png)
 
 > **Benchmark measuring how accurately MCP servers provide context to coding agents**
 
