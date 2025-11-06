@@ -101,6 +101,8 @@ The goal is to test whether MCP servers can retrieve and present documentation t
 
 Multi-model evaluation (GPT-5, Grok-4, Deepseek-v3.2) across 20 AI framework integration scenarios
 
+![Accuracy Comparison](visualizations/accuracy_comparison.png)
+
 | MCP Server | Scenarios Passed |
 |------------|------------------|
 | **Deepcon** | 18 |
@@ -117,6 +119,8 @@ Multi-model evaluation (GPT-5, Grok-4, Deepseek-v3.2) across 20 AI framework int
 
 Based on recent benchmark runs across 20 scenarios:
 
+![Token Usage Comparison](visualizations/token_usage_comparison.png)
+
 | MCP Server | Avg Tokens/Scenario | Total Tokens |
 |------------|---------------------|--------------|
 | **Context7** | 5,626 | **112,515** |
@@ -125,6 +129,12 @@ Based on recent benchmark runs across 20 scenarios:
 | **NIA** | 1,873 | **37,457** |
 
 **Key Finding**: More tokens doesn't guarantee better accuracy. Deepcon achieves 90% success with only 2,365 avg tokens, while Context7 provides 5,626 tokens but achieves 65% success.
+
+### Efficiency Analysis
+
+![Efficiency Scatter](visualizations/efficiency_scatter.png)
+
+The efficiency chart above shows the relationship between accuracy and token usage. Deepcon stands out in the ideal quadrant (high accuracy, low tokens), demonstrating superior context quality and efficiency.
 
 ### View Full Results
 
